@@ -1,10 +1,9 @@
-// Create video element for camera feed
+// Get video feed from back camera
 const video = document.createElement('video')
 video.setAttribute('autoplay', '')
 video.setAttribute('playsinline', '')
 document.body.appendChild(video)
 
-// Get video feed from back camera
 navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
   .then((stream) => {
     video.srcObject = stream
@@ -14,13 +13,22 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
     console.error('Failed to get user media', err)
   })
 
-AFRAME.registerComponent('image-loader', {
-  init: function () {
-    this.el.addEventListener('loaded', () => {
-      this.el.object3D.visible = false
-    })
-  }
-})
+function getDistanceFromLatLonInMeters (lat1, lon1, lat2, lon2) {
+  const earthRadius = 6371000 // Radius of the earth in meters
+  const dLat = deg2rad(lat2 - lat1) // deg2rad below
+  const dLon = deg2rad(lon2 - lon1)
+  const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2)
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+  const distance = earthRadius * c // Distance in meters
+  return distance
+}
+
+function deg2rad (deg) {
+  return deg * (Math.PI / 180)
+}
 
 AFRAME.registerComponent('location-based-ar', {
   init: function () {
@@ -29,20 +37,27 @@ AFRAME.registerComponent('location-based-ar', {
       const longitude = position.coords.longitude
       const altitude = position.coords.altitude || 0
 
-      const marker = document.querySelector('a-marker')
-      const markerPosition = new THREE.Vector3(-21.2665809, altitude, -48.5037126)
-      const worldPosition = ARjs.Helpers.getMarkerWorldPosition(marker.object3D, markerPosition)
-      marker.object3D.position.set(worldPosition.x, worldPosition.y, worldPosition.z)
+      // Calculate distance between current location and target location
+      const targetLatitude = -21.2665809
+      const targetLongitude = -48.5037126
+      const distance = getDistanceFromLatLonInMeters(latitude, longitude, targetLatitude, targetLongitude)
 
-      const distance = ARjs.Helpers.distanceBetweenPoints(markerPosition, new THREE.Vector3(latitude, altitude, -longitude))
-      const maxDistance = 0.05
+      const maxDistance = 100 // In meters
       const image = document.querySelector('#my-image')
 
       if (distance <= maxDistance) {
-        image.setAttribute('visible', 'true')
+        image.classList.add('visible')
       } else {
-        image.setAttribute('visible', 'false')
+        image.classList.remove('visible')
       }
     })
   }
+})
+
+const scene = document.querySelector('a-scene')
+const image = document.querySelector('#my-image')
+image.addEventListener('load', () => {
+  image.classList.add('loaded')
+  image.classList.remove('hidden')
+  scene.setAttribute('location-based-ar', '')
 })
