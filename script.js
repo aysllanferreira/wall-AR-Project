@@ -7,9 +7,11 @@ navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
 
 // Set up AR.js
 const canvas = document.getElementById('canvas')
+canvas.style.width = window.innerWidth + 'px'
+canvas.style.height = window.innerHeight + 'px'
 const renderer = new THREE.WebGLRenderer({ canvas })
 renderer.setSize(window.innerWidth, window.innerHeight)
-const arToolkitSource = new THREEx.ArToolkitSource({ sourceElement: video })
+const arToolkitSource = new THREEx.ArToolkitSource({ sourceElement: video, width: window.innerWidth, height: window.innerHeight })
 arToolkitSource.init(() => {
   setTimeout(() => arToolkitSource.onResize(renderer.domElement), 1)
 })
@@ -21,7 +23,7 @@ const markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, { t
 
 // Create and position image on marker
 const loader = new THREE.TextureLoader()
-loader.load('images/your-image.jpg', (texture) => {
+loader.load('./teste.jpeg', (texture) => {
   const geometry = new THREE.PlaneGeometry(1, 1)
   const material = new THREE.MeshBasicMaterial({ map: texture })
   const mesh = new THREE.Mesh(geometry, material)
