@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // Get video feed from back camera
 const video = document.createElement('video')
 video.setAttribute('autoplay', '')
@@ -18,9 +19,9 @@ function getDistanceFromLatLonInMeters (lat1, lon1, lat2, lon2) {
   const dLat = deg2rad(lat2 - lat1) // deg2rad below
   const dLon = deg2rad(lon2 - lon1)
   const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2)
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2)
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
   const distance = earthRadius * c // Distance in meters
   return distance
@@ -35,7 +36,6 @@ AFRAME.registerComponent('location-based-ar', {
     navigator.geolocation.watchPosition((position) => {
       const latitude = position.coords.latitude
       const longitude = position.coords.longitude
-      const altitude = position.coords.altitude || 0
 
       // Calculate distance between current location and target location
       const targetLatitude = -21.2665809
