@@ -19,7 +19,7 @@ const arToolkitContext = new THREEx.ArToolkitContext({ cameraParametersUrl: './c
 arToolkitContext.init(() => {
   camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix())
 })
-const markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, { type: 'pattern', patternUrl: './pattern-teste.patt', changeMatrixMode: 'cameraTransformMatrix' })
+const markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, { type: 'pattern', patternUrl: './pattern-teste (1).patt', changeMatrixMode: 'cameraTransformMatrix' })
 
 // Create and position image on marker
 const loader = new THREE.TextureLoader()
