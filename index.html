@@ -1,41 +1,21 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>AR.js A-Frame</title>
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script type='text/javascript' src='./build/aframe-ar.js'></script>
 </head>
-<body>
-  <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false; trackingMethod: best; hit-testing-enabled: true' renderer='antialias: true; alpha: true'>
-    <a-marker type='image' preset='custom' hit-testing-enabled='true' id='surface-marker' hit-test>
-      <a-plane id='surface' color='red' scale='1 1 1' position='0 0 0'></a-plane>
-      <a-text id='display-text' value='This text will appear on the surface.' color='white' scale='10 10 10' visible='false'></a-text>
-    </a-marker>
-    <a-camera gps-camera></a-camera>
-  </a-scene>
 
-  <script>
-    AFRAME.registerComponent('hit-test', {
-      init: function () {
-        const el = this.el;
-        const surface = document.querySelector('#surface');
-        const displayText = document.querySelector('#display-text');
-        el.sceneEl.addEventListener('arjs-hit-test-end', function (event) {
-          const hitTest = event.detail.intersections[0];
-          if (hitTest) {
-            surface.object3D.position.copy(hitTest.pose.transform.position);
-            surface.object3D.quaternion.copy(hitTest.pose.transform.rotation);
-            displayText.setAttribute('position', surface.getAttribute('position'));
-            displayText.object3D.lookAt(el.sceneEl.camera.el.object3D.position);
-            displayText.object3D.rotateX(THREE.Math.degToRad(-90));
-            displayText.setAttribute('visible', 'true');
-          } else {
-            displayText.setAttribute('visible', 'false');
-          }
-        });
-      }
-    });
-  </script>
+<body>
+  <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
+    renderer='antialias: true; alpha: true'>
+    <a-camera gps-camera></a-camera>
+    <!-- Insert your latitude and longitude to work properly. -->
+    <a-text value='This will always face the user.' look-at='[gps-camera]'
+      gps-entity-place="latitude: -21.2666748; longitude: -48.5037267" scale="50 50 50"></a-entity>
+  </a-scene>
 </body>
+
 </html>
