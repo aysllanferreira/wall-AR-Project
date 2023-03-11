@@ -15,11 +15,11 @@ const arToolkitSource = new THREEx.ArToolkitSource({ sourceElement: video, width
 arToolkitSource.init(() => {
   setTimeout(() => arToolkitSource.onResize(renderer.domElement), 1)
 })
-const arToolkitContext = new THREEx.ArToolkitContext({ cameraParametersUrl: 'data/camera_para.dat', detectionMode: 'mono' })
+const arToolkitContext = new THREEx.ArToolkitContext({ cameraParametersUrl: './camera_para.dat', detectionMode: 'mono' })
 arToolkitContext.init(() => {
   camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix())
 })
-const markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, { type: 'pattern', patternUrl: 'markers/pattern-marker.patt', changeMatrixMode: 'cameraTransformMatrix' })
+const markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, { type: 'pattern', patternUrl: './pattern-teste.patt', changeMatrixMode: 'cameraTransformMatrix' })
 
 // Create and position image on marker
 const loader = new THREE.TextureLoader()
