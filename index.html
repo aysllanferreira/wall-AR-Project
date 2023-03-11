@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.3.0/aframe/build/aframe-ar.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r125/three.min.js"></script>
+    <script src="https://raw.githubusercontent.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.js"></script>
     <title>Location-Based Image Display</title>
 
     <style>
@@ -31,11 +30,15 @@
   <body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs>
       <a-marker preset="hiro">
-        <a-entity position="0 0 0" scale="0.05 0.05 0.05" obj-model="obj: url(./PenguinBaseMesh.obj); mtl: url(./PenguinBaseMesh.mtl)" class="marker"></a-entity>
+        <a-entity position="0 0 0" scale="0.05 0.05 0.05"
+          obj-model="obj: url(./PenguinBaseMesh.obj); mtl: url(./PenguinBaseMesh.mtl);"
+          rotation="0 180 0" 
+          position="0 0.1 0"
+          look-at="[camera]"
+          class="marker"></a-entity>
         <a-image id="my-image" position="0 0 -0.1" scale="0.05 0.05 1" src="./teste.jpeg" class="marker"></a-image>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
-    <script src="./script.js"></script>
+    <script src="script.js"></script>
   </body>
-</html>
