@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://raw.githubusercontent.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <title>Location-Based Image Display</title>
-  </head>
-  <body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs>
-      <a-image id="my-image" src="./teste.jpeg" width="1" height="1" class="hidden"></a-image>
-      <a-entity camera></a-entity>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>GeoAR.js demo</title>
+    <!-- Dynamically add places from Javascript -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script type='text/javascript' src='../../../build/aframe-ar-nft.js'></script>
+    <script type='text/javascript' src='index.js'></script>
+
+</head>
+
+<link rel="stylesheet" href="./index.css">
+
+
+<body style='margin: 0; overflow: hidden;'>
+    <a-scene vr-mode-ui="enabled: false" embedded
+        arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
+
+        <a-camera gps-camera rotation-reader>
+        </a-camera>
     </a-scene>
-  </body>
-  <script src="./script.js"></script>
-</html>
+</body>
