@@ -13,8 +13,19 @@
     <a-scene
         vr-mode-ui="enabled: false"
         arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'>
-
-        <a-plane position="0 2 -5" rotation="-90 0 0" width="5" height="3" color="#ffffff"></a-plane>
-        <a-text value="Aysllan is beautiful" position="0 1 0" rotation="-90 0 0" scale="2 2 2"></a-text>
+        <arjs-anchor hit-testing-enabled="true"></arjs-anchor>
     </a-scene>
+
+    <script>
+        var anchor = document.querySelector('arjs-anchor');
+
+        anchor.addEventListener('anchorFound', function(ev){
+            var text = document.createElement('a-text');
+            text.setAttribute('value', 'Aysllan is beautiful');
+            text.setAttribute('scale', '10 10 10');
+            text.setAttribute('look-at', '[gps-camera]');
+            text.setAttribute('gps-entity-place', `latitude: ${ev.detail.anchorNode.anchorLocation.lat}; longitude: ${ev.detail.anchorNode.anchorLocation.lng};`);
+            document.querySelector('a-scene').appendChild(text);
+        });
+    </script>
 </body>
