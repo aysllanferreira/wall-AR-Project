@@ -4,11 +4,15 @@ video.setAttribute('autoplay', '')
 video.setAttribute('playsinline', '')
 document.body.appendChild(video)
 
-// Get video feed from webcam
-navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-  video.srcObject = stream
-  video.play()
-})
+// Get video feed from back camera
+navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+  .then((stream) => {
+    video.srcObject = stream
+    video.play()
+  })
+  .catch((err) => {
+    console.error('Failed to get user media', err)
+  })
 
 AFRAME.registerComponent('image-loader', {
   init: function () {

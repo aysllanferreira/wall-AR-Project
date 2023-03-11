@@ -30,8 +30,9 @@
   </head>
   <body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs>
-      <a-marker preset="hiro" image-loader location-based-ar>
-        <a-image src="./pattern-teste.png" id="my-image" width="0.4" height="0.4" visible="false" position="0 0 0.1"></a-image>
+      <a-marker preset="hiro">
+        <a-entity position="0 0 0" scale="0.05 0.05 0.05" obj-model="obj: url(./PenguinBaseMesh.obj); mtl: url(./PenguinBaseMesh.mtl)" class="marker"></a-entity>
+        <a-image id="my-image" position="0 0 -0.1" scale="0.05 0.05 1" src="./teste.jpeg" class="marker"></a-image>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
